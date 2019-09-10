@@ -6,8 +6,8 @@ const app = require('express')(),
 	port = process.env.PORT
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
+app.use(bodyParser.json({limit: '50mb'}));
+app.use('/record', require('./routers/record'))
 
 
 

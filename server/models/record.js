@@ -1,15 +1,18 @@
 const mongoose = require('mongoose'),
+	path = require('path'),
 	Schema = mongoose.Schema
 
 const recordSchema = new Schema({
 	title: {type: String, unique: true, required: true},
 	id: {type: Number, required: true},
-	lang: {type: Number, required: true},
+	lang: {type: String, required: true, enum: ['eng', 'rus', 'arm']},
 	description: {type: String, required: true},
 	audio: String,
 	image: String,
-	createdAt: {type: Date, required: true}
+	createdAt: {type: Date, required: true, default: Date.now}
 })
+
+
 
 const Record = mongoose.model('Record', recordSchema)
 
