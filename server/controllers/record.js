@@ -6,7 +6,7 @@ const _ = require('lodash'),
 
 	{Record} = require('../models/record');
 
-exports.addRecord = async(req, res) => {
+exports.add = async(req, res) => {
 
 	//Get errors from express-validator
 	const errors = validationResult(req);
@@ -39,7 +39,7 @@ exports.addRecord = async(req, res) => {
 	}
 }
 
-exports.editRecord = async(req, res) => {
+exports.edit = async(req, res) => {
 	req.body.id = req.params.id
 	req.body.lang = req.params.lang
 	//seperate data for base64 decoder
@@ -63,7 +63,7 @@ exports.editRecord = async(req, res) => {
 	}
 }
 
-exports.deleteRecord = async(req, res) => {
+exports.delete = async(req, res) => {
 	//fetch record id and language
 	const id = req.params.id,
 		lang = req.params.lang
@@ -81,6 +81,30 @@ exports.deleteRecord = async(req, res) => {
 
 		res.send(doc)
 	} catch(e) {
+		console.log(e);
+		res.status(400).send(e)
+	}
+}
+
+exports.get = async(req, res) => {
+	const id = req.params.id,
+		lang = req.params.lang
+	 try{
+		 const doc = await Record.findOne({id, lang})
+		 if(!doc) throw 'No record is found with given ID ang language'
+		 res.send(doc)
+	 }catch(e){
+		 console.log(e);
+		 res.status(404).send(e)
+	 }
+}
+
+exports.getAll = async(req, res) => {
+	try{
+		const doc = await Record.find()
+		if(!doc[0]) throw 'There are no records in DB'
+		res.send(doc)
+	}catch(e){
 		console.log(e);
 		res.status(400).send(e)
 	}
