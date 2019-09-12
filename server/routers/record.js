@@ -1,9 +1,10 @@
 const router = require('express').Router(),
 	{check} = require('express-validator'),
 
+	{auth} = require('../middlewares/auth')
 	controller = require('../controllers/record')
 
-router.post('/add', check('title')
+router.post('/add', auth, check('title')
 					.isLength({min:5})
 					.withMessage({type: 'rec-validation', msg: 'Title must be at least 5 character length'}),
 				check('image')
@@ -14,9 +15,9 @@ router.post('/add', check('title')
 					.withMessage({type:'rec-validation', msg: 'This field can not be empty'}),
 				controller.add)
 
-router.post('/edit/:id/:lang', controller.edit)
+router.post('/edit/:id/:lang', auth, controller.edit)
 
-router.get('/delete/:id/:lang', controller.delete)
+router.get('/delete/:id/:lang', auth, controller.delete)
 
 router.get('/:id/:lang', controller.get)
 

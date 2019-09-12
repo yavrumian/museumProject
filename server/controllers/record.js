@@ -2,7 +2,8 @@ const _ = require('lodash'),
 	path = require('path'),
 	fs = require('fs'),
 	{validationResult} = require('express-validator'),
-	{base64toFile} = require('../utils/base64Decoder'),
+	base64toFile = require('../utils/base64Decoder'),
+	formatter = require('../utils/urlFormatter'),
 
 	{Record} = require('../models/record');
 
@@ -31,7 +32,10 @@ exports.add = async(req, res) => {
 		//create new doc and save it
 		const rec = new Record(body)
 		await rec.save()
-		res.send(rec)
+		const formated = formatter(rec.image, rec.audio)
+		rec.image = formated.img
+		rec.audio = formated.audio
+		res.send(doc)
 	}catch(e){
 		console.log(e);
 
@@ -55,7 +59,9 @@ exports.edit = async(req, res) => {
 	try{
 		const doc = await Record.findOneAndUpdate({id: req.params.id, lang: req.params.lang }, {$set: body}, {new: true})
 		if(!doc) throw 'No record found with given ID and language'
-
+		const formated = formatter(doc.image, doc.audio)
+		doc.image = formated.img
+		doc.audio = formated.audio
 		res.send(doc)
 	}catch(e){
 		console.log(e);
@@ -78,7 +84,9 @@ exports.delete = async(req, res) => {
 		const audioUrl = path.join(__dirname, `../../public/audio/${doc.audio}`)
 		fs.unlink(imageUrl, (err) => {if(err) throw err})
 		fs.unlink(audioUrl, (err) => {if(err) throw err})
-
+		const formated = formatter(doc.image, doc.audio)
+		doc.image = formated.img
+		doc.audio = formated.audio
 		res.send(doc)
 	} catch(e) {
 		console.log(e);
@@ -90,9 +98,13 @@ exports.get = async(req, res) => {
 	const id = req.params.id,
 		lang = req.params.lang
 	 try{
-		 const doc = await Record.findOne({id, lang})
-		 if(!doc) throw 'No record is found with given ID ang language'
-		 res.send(doc)
+		const doc = await Record.findOne({id, lang})
+		if(!doc) throw 'No record is found with given ID ang language'
+
+		const formated = formatter(doc.image, doc.audio)
+		doc.image = formated.img
+		doc.audio = formated.audio
+		res.send(doc)
 	 }catch(e){
 		 console.log(e);
 		 res.status(404).send(e)
@@ -103,6 +115,11 @@ exports.getAll = async(req, res) => {
 	try{
 		const doc = await Record.find()
 		if(!doc[0]) throw 'There are no records in DB'
+		for(record of doc){
+						let formated = formatter(record.image, record.audio)
+			record.image = formated.img
+			record.audio = formated.audio
+		}
 		res.send(doc)
 	}catch(e){
 		console.log(e);

@@ -6,8 +6,9 @@ var	imgFormat,
 	imgUrl,
 	audioUrl
 
-exports.base64toFile = (body) => {
-	imgFormat = body.image.substring(11, 14)
+module.exports = (body) => {
+	imgFormat = body.image.trim().substring(11, 14)
+	if(imgFormat.slice(-1) == ';') imgFormat = imgFormat.slice(0, -1);
 	base64img = body.image.split(';base64,').pop()
 	imgUrl = path.join(__dirname, `../../public/img/${body.lang}${body.id}.${imgFormat}`)
 	audioUrl = path.join(__dirname, `../../public/audio/${body.lang}${body.id}.mp3`)
