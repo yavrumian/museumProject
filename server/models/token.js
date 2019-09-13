@@ -3,6 +3,7 @@ const mongoose = require('mongoose'),
 
 const lengthValidator = (value) => {
 	if(value && value.toString.length == 9)	return true
+	console.log('Token must be 9 character long');
 	return false
 }
 

@@ -13,6 +13,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(session({secret:process.env.SECRET,  resave: false, saveUninitialized: true}))
 app.use(express.static(path.join(__dirname, '../public')))
 app.use('/record', require('./routers/record'))
+app.use('/token', require('./routers/token'))
 
 app.post('/login', (req, res) => {
 	console.log(req.body.username, process.env.LOGIN);
