@@ -4,7 +4,7 @@ const router = require('express').Router(),
 
 router.get('/create', query('count')
 					.isInt({min:1, max: 50})
-					.withMessage('Count must be number from 1 to 99'),
+					.withMessage('Count must be number from 1 to 50'),
  			controller.create)
 
 module.exports = router

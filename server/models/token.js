@@ -1,16 +1,11 @@
 const mongoose = require('mongoose'),
 	Schema = mongoose.Schema
 
-const lengthValidator = (value) => {
-	if(value && value.toString.length == 9)	return true
-	console.log('Token must be 9 character long');
-	return false
-}
+
 
 const tokenSchema = new Schema({
-	token: {type: Number, required: true, validate: lengthValidator, unique: true},
+	token: {type: String, required: true, minLength: process.env.TOKEN_LEN, maxLength: process.env.TOKEN_LEN, unique: true},
 	createdAt: {type: Date, required: true, default: Date.now},
-	ipAdress: String,
 	expireAt: {type: Date, default: undefined}
 })
 

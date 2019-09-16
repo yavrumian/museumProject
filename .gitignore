@@ -1,4 +1,5 @@
 node_modules
 public/img
+public/pdf
 public/audio
-server/temp
+server/tmp
