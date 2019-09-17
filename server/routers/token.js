@@ -7,4 +7,9 @@ router.get('/create', query('count')
 					.withMessage('Count must be number from 1 to 50'),
  			controller.create)
 
+router.get('/', query('token')
+ 				.isLength(process.env.TOKEN_LEN)
+				.withMessage('Invalid Token'),
+			controller.validate)
+
 module.exports = router

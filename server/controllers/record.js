@@ -38,7 +38,7 @@ exports.add = async(req, res) => {
 		res.send(doc)
 	}catch(e){
 		console.log(e);
-
+		if(e.message) e = {msg: e.message}
 		res.status(400).send(e)
 	}
 }
@@ -65,6 +65,7 @@ exports.edit = async(req, res) => {
 		res.send(doc)
 	}catch(e){
 		console.log(e);
+		if(e.message) e = {msg: e.message}
 		res.status(404).send(e)
 	}
 }
@@ -90,6 +91,7 @@ exports.delete = async(req, res) => {
 		res.send(doc)
 	} catch(e) {
 		console.log(e);
+		if(e.message) e = {msg: e.message}
 		res.status(400).send(e)
 	}
 }
@@ -107,6 +109,7 @@ exports.get = async(req, res) => {
 		res.send(doc)
 	 }catch(e){
 		 console.log(e);
+		 if(e.message) e = {msg: e.message}
 		 res.status(404).send(e)
 	 }
 }
@@ -123,6 +126,7 @@ exports.getAll = async(req, res) => {
 		res.send(doc)
 	}catch(e){
 		console.log(e);
+		if(e.message) e = {msg: e.message}
 		res.status(400).send(e)
 	}
 }

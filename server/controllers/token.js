@@ -35,7 +35,7 @@ exports.create = async(req, res) => {
 		//create token, define path to QR and text in qr
 		const token = id(process.env.TOKEN_LEN, process.env.TOKEN_PATTERN)
 		const pathToQR = path.join(__dirname, `../tmp/qr/${token}.png`)
-		const textToQR = `${process.env.HOST}/token/${token}`
+		const textToQR = `${process.env.HOST}/token?token=${token}`
 
 		//push doc to array
 		allDocs.push(new Token({token}))
@@ -62,5 +62,32 @@ exports.create = async(req, res) => {
 		res.status(400).send(e)
 	}
 
+
+}
+
+exports.validate = async(req, res) => {
+	try{
+		//check for validator errors, throw if any is found
+		const err = validationResult(req)
+		if(!err.isEmpty()) throw (err.array())
+
+		//fetch token from query, throw if not found or already used
+		const token = req.query.token;
+		const expTime = Date.now() + (process.env.COOKIE_LIFE * 3600 * 1000)
+		const doc = await Token.findOne({token})
+		if(!doc || doc.expireAt) throw ({msg: 'Invalid Token'})
+
+		//set expireTime and save to DB
+		doc.expireAt = expTime
+		await doc.save()
+		//set session.token for authentication
+		req.session.token = token
+
+		res.send({token})
+	}catch(e){
+		console.log(e);
+		if(e.message) e = {msg: e.message}
+		res.status(400).send(e)
+	}
 
 }
