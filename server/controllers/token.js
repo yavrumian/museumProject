@@ -3,6 +3,7 @@ const id = require('random-id'),
 	fs = require('fs'),
 	path = require('path'),
 	QRcode = require('qrcode'),
+	request = require('request-promise'),
 	{validationResult} = require('express-validator'),
 
 	multSaver = require('../utils/multipleSaver'),
@@ -83,11 +84,25 @@ exports.validate = async(req, res) => {
 		//set session.token for authentication
 		req.session.token = token
 
-		res.send({token})
+
 	}catch(e){
 		console.log(e);
 		if(e.message) e = {msg: e.message}
 		res.status(400).send(e)
 	}
+	try{
+		//send request to admin server
+		const response = await request({
+			method: 'GET',
+			json: true,
+			uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`
+		})
+		if(response.statusCode == 400) throw response.body
+		res.send({token: req.query.token})
+	}catch(e){
+		console.log({name: e.name, msg: e.message});
+		res.status(400).send({name: e.name, msg: e.message})
+	}
+
 
 }

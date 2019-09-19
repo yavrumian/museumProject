@@ -51,5 +51,5 @@ cron.schedule(process.env.PDF_DELETE_TIME, async() => {
 })
 
 app.listen(port, () => {
-	console.log(`Server working on port ${port}`);
+	console.log(`Server running on port ${port}`);
 })
