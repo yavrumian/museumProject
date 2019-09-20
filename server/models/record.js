@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'),
-	path = require('path'),
 	Schema = mongoose.Schema
 
 const recordSchema = new Schema({

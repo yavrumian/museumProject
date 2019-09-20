@@ -8,7 +8,8 @@ const id = require('random-id'),
 
 	multSaver = require('../utils/multipleSaver'),
 
-	{Token} = require('../models/token')
+	{Token} = require('../models/token'),
+	{Stat} = require('../models/stat')
 
 exports.create = async(req, res) => {
 	//Get errors from express-validator and throw if there're any
@@ -88,21 +89,27 @@ exports.validate = async(req, res) => {
 	}catch(e){
 		console.log(e);
 		if(e.message) e = {msg: e.message}
-		res.status(400).send(e)
+		return res.status(400).send(e)
 	}
 	try{
 		//send request to admin server
 		const response = await request({
-			method: 'GET',
+			method: 'POST',
 			json: true,
-			uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`
+			uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`,
+			body: {createdAt: Date.now()}
 		})
 		if(response.statusCode == 400) throw response.body
-		res.send({token: req.query.token})
 	}catch(e){
+		try{
+			await new Stat({createdAt: Date.now()}).save()
+		}catch(e){
+			console.log(e);
+			return res.status(400).send()
+		}
 		console.log({name: e.name, msg: e.message});
-		res.status(400).send({name: e.name, msg: e.message})
 	}
+	res.send({token: req.query.token})
 
 
 }

@@ -6,6 +6,8 @@ const express = require('express'),
 	fs = require('fs-extra'),
 	{mongoose} = require('./db/mongoose'),
 
+	request = require('request-promise'),
+	{Stat} = require('./models/stat'),
 
 	app = express(),
 	port = process.env.PORT
@@ -47,6 +49,32 @@ cron.schedule(process.env.PDF_DELETE_TIME, async() => {
 	}catch(e){
 		console.log('Problem occured while deleting PDF files, displaying error');
 		console.log(e);
+	}
+})
+
+cron.schedule(process.env.STAT_SEND_TIME, async() => {
+	try{
+		const stats = await Stat.find({})
+		if(!stats[0]) throw 'no stats'
+
+		const response = await request(`http://${process.env.ADMIN_SERVER}/`)
+		if(response.statusCode == 400) throw response.body
+
+		console.log('Sending statistics to admin server...');
+
+		for (var i = 0; i < stats.length; i++) {
+			await request({
+				method: 'POST',
+				json: true,
+				uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`,
+				body: {createdAt: stats[i].createdAt}
+			})
+
+			await Stat.findOneAndDelete({_id: stats[i]._id})
+		}
+		console.log('Statistics successfully sent to admin server');
+	}catch(e){
+		console.log();
 	}
 })
 
