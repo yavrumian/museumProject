@@ -25,7 +25,6 @@ app.use('/record', require('./routers/record'))
 app.use('/token', require('./routers/token'))
 
 app.post('/login', (req, res) => {
-	console.log(req.body.username, process.env.LOGIN);
 	if(req.body.username == process.env.LOGIN && req.body.pass == process.env.PASS){
 		req.session.isLogged = true
 		res.send('Logged in')

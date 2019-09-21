@@ -23,11 +23,11 @@ exports.create = async(req, res) => {
 
 	//define PDF doc and initilize options
 	const PDFsize = [parseFloat(process.env.PDF_WIDTH), parseFloat(process.env.PDF_HEIGTH)]
-	const pdf = new PDFdoc({size: PDFsize, fontSize: 12, autoFirstPage: false});
+	const pdf = new PDFdoc({size: PDFsize, fontSize: 12, autoFirstPage: false, margin: 0});
 	//define path to doc and create it
 	const pdfName = id(5, '0aA')
 	const pathToPDF = path.join(__dirname, `../../public/pdf/${pdfName}.pdf`)
-	const urlToPDF = `${process.env.HOST}/pdf/${pdfName}.pdf`
+	const urlToPDF = `http://${process.env.HOST}/pdf/${pdfName}.pdf`
 	pdf.pipe(fs.createWriteStream(pathToPDF));
 
 	//array to collect all docs and save it latter
@@ -38,6 +38,7 @@ exports.create = async(req, res) => {
 		const token = id(process.env.TOKEN_LEN, process.env.TOKEN_PATTERN)
 		const pathToQR = path.join(__dirname, `../tmp/qr/${token}.png`)
 		const textToQR = `${process.env.HOST}/token?token=${token}`
+		const pathToLogo = path.join(__dirname, '../img/logo.jpg')
 
 		//push doc to array
 		allDocs.push(new Token({token}))
@@ -46,13 +47,29 @@ exports.create = async(req, res) => {
 			//create QR file, add it to PDF
 			await QRcode.toFile(pathToQR, textToQR)
 			pdf.addPage()
-				.text(textToQR)
-				.image(pathToQR)
+				.image(pathToLogo, 0, 0, {fit:[227, 60], align: 'center'})
+				.text('Museum Name', {align: 'center'})
+				.image(pathToQR, 0, 81, {fit:[227, 160], align: 'center'})
+				.fontSize(8)
+				.fillColor('grey')
+				.text('If you have any issues with QR code, please visit', 0, 240, {align: 'center'})
+				// .text(' ')
+				.fontSize(10)
+				.fillColor('black')
+				.text(`${process.env.HOST}/token`, {lineBrak: false, align: 'center'})
+				.text(' ')
+				.fontSize(8)
+				.fillColor('grey')
+				.text('and enter your token', {align: 'center'})
+				// .text(' ')
+				.fontSize(10)
+				.fillColor('black')
+				.text(`${token}`, {lineBrak: false, align: 'center'})
 			//Delete QR file from tmp
 			fs.unlink(pathToQR, (err) => {if(err) throw err})
 		}catch(e){
 			console.log(e);
-			res.status(400).send(e)
+			return res.status(400).send(e)
 		}
 	}
 	try{
