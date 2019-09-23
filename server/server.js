@@ -4,6 +4,7 @@ const express = require('express'),
 	path = require('path'),
 	cron = require('node-cron'),
 	fs = require('fs-extra'),
+	cors = require('cors')
 	{mongoose} = require('./db/mongoose'),
 
 	request = require('request-promise'),
@@ -14,6 +15,7 @@ const express = require('express'),
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '50mb'}));
+app.use(cors())
 app.use(session({
 		secret:process.env.SECRET,
 		resave: false,
