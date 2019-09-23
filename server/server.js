@@ -4,7 +4,7 @@ const express = require('express'),
 	path = require('path'),
 	cron = require('node-cron'),
 	fs = require('fs-extra'),
-	cors = require('cors')
+	cors = require('cors'),
 	{mongoose} = require('./db/mongoose'),
 
 	request = require('request-promise'),
