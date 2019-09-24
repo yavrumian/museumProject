@@ -117,7 +117,7 @@ exports.get = async(req, res) => {
 exports.getAll = async(req, res) => {
 	try{
 		const doc = await Record.find()
-		if(!doc[0]) throw 'There are no records in DB'
+		if(!doc[0]) throw {[]}
 		for(record of doc){
 						let formated = formatter(record.image, record.audio)
 			record.image = formated.img

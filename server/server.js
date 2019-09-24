@@ -23,22 +23,22 @@ app.use(session({
 		cookie: {maxAge: process.env.COOKIE_LIFE*3600*1000}
 	}))
 app.use(express.static(path.join(__dirname, '../public')))
-app.use('/record', require('./routers/record'))
-app.use('/token', require('./routers/token'))
+app.use(`/${process.env.PREFIX}/record`, require('./routers/record'))
+app.use(`/${process.env.PREFIX}/token`, require('./routers/token'))
 
-app.post('/login', (req, res) => {
+app.post(`/${process.env.PREFIX}/login`, (req, res) => {
 	if(req.body.username == process.env.LOGIN && req.body.pass == process.env.PASS){
 		req.session.isLogged = true
-		res.send('Logged in')
+		res.send({status: 'success', msg:'You\'re logged in'})
 	 }
 	else res.status(401).end('Failed to login')
 })
 
-app.get('/logout', (req, res) => {
+app.get(`/${process.env.PREFIX}/logout`, (req, res) => {
 	console.log(req.port);
 	if(req.session.isLogged == true) {
 		req.session.isLogged = false;
-		res.send('Logged out')
+		res.send({status: 'success', msg:'You\'re logged out'})
 	}else res.end('You\'re not logged in')
 })
 
