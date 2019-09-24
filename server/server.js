@@ -35,11 +35,15 @@ app.post(`/${process.env.PREFIX}/login`, (req, res) => {
 })
 
 app.get(`/${process.env.PREFIX}/logout`, (req, res) => {
-	console.log(req.port);
-	if(req.session.isLogged == true) {
+	if(req.session.isLogged) {
 		req.session.isLogged = false;
 		res.send({status: 'success', msg:'You\'re logged out'})
 	}else res.send({status: 'failed', msg:'You\'re not logged in'})
+})
+
+app.get(`/${process.env.PREFIX}/checkLogin`, (req, res) => {
+	if(req.session.isLogged)	res.send({msg:'You\'re logged in'})
+	else res.send({msg:'You\'re not logged in'})
 })
 
 cron.schedule(process.env.PDF_DELETE_TIME, async() => {
