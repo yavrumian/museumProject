@@ -31,7 +31,7 @@ app.post(`/${process.env.PREFIX}/login`, (req, res) => {
 		req.session.isLogged = true
 		res.send({status: 'success', msg:'You\'re logged in'})
 	 }
-	else res.status(401).end('Failed to login')
+	else res.status(401).end({status: 'failed', msg:'Invalid username and/or password'})
 })
 
 app.get(`/${process.env.PREFIX}/logout`, (req, res) => {
