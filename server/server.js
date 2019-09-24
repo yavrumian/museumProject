@@ -31,7 +31,7 @@ app.post(`/${process.env.PREFIX}/login`, (req, res) => {
 		req.session.isLogged = true
 		res.send({status: 'success', msg:'You\'re logged in'})
 	 }
-	else res.status(401).end({status: 'failed', msg:'Invalid username and/or password'})
+	else res.status(401).send({status: 'failed', msg:'Invalid username and/or password'})
 })
 
 app.get(`/${process.env.PREFIX}/logout`, (req, res) => {
@@ -39,7 +39,7 @@ app.get(`/${process.env.PREFIX}/logout`, (req, res) => {
 	if(req.session.isLogged == true) {
 		req.session.isLogged = false;
 		res.send({status: 'success', msg:'You\'re logged out'})
-	}else res.end('You\'re not logged in')
+	}else res.send({status: 'failed', msg:'You\'re not logged in'})
 })
 
 cron.schedule(process.env.PDF_DELETE_TIME, async() => {
