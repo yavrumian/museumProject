@@ -46,6 +46,11 @@ app.get(`/${process.env.PREFIX}/checkLogin`, (req, res) => {
 	else res.send({msg:'You\'re not logged in'})
 })
 
+app.get(`/${process.env.PREFIX}/getLangs`, (req, res) => {
+	res.send({langs: process.env.LANGS.split(',')})
+
+})
+
 cron.schedule(process.env.PDF_DELETE_TIME, async() => {
 	console.log('Deleting PDF files...');
 	try{
