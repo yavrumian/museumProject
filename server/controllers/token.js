@@ -130,3 +130,14 @@ exports.validate = async(req, res) => {
 
 
 }
+
+exports.getActive = async(req, res) => {
+	try{
+		const active = await Token.countDocuments({expireAt: undefined})
+
+		res.send({active})
+	}catch(e){
+		console.log(e);
+		res.status(400).send(e)
+	}
+}

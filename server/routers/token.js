@@ -13,4 +13,6 @@ router.get('/', query('token')
 				.withMessage('Invalid Token'),
 			controller.validate)
 
+router.get('/active', authAdmin, controller.getActive)
+
 module.exports = router
