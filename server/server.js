@@ -13,8 +13,8 @@ const express = require('express'),
 	app = express(),
 	port = process.env.PORT
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 app.use(cors())
 app.use(session({
 		secret:process.env.SECRET,
