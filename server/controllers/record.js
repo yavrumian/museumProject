@@ -58,7 +58,7 @@ exports.edit = async(req, res) => {
 	const body = _.pick(req.body, ['title', 'description', 'audio', 'image'])
 	try{
 		const doc = await Record.findOneAndUpdate({id: req.params.id, lang: req.params.lang }, {$set: body}, {new: true})
-		if(!doc) throw 'No record found with given ID and language'
+		if(!doc) throw {status 'failed', msg: 'No record found with given ID and language'}
 		const formated = formatter(doc.image, doc.audio)
 		doc.image = formated.img
 		doc.audio = formated.audio
