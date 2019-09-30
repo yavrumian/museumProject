@@ -58,7 +58,7 @@ exports.edit = async(req, res) => {
 	const body = _.pick(req.body, ['title', 'description', 'audio', 'image'])
 	try{
 		const doc = await Record.findOneAndUpdate({id: req.params.id, lang: req.params.lang }, {$set: body}, {new: true})
-		if(!doc) throw {status 'failed', msg: 'No record found with given ID and language'}
+		if(!doc) throw {status: 'failed', msg: 'No record found with given ID and language'}
 		const formated = formatter(doc.image, doc.audio)
 		doc.image = formated.img
 		doc.audio = formated.audio
@@ -78,7 +78,7 @@ exports.delete = async(req, res) => {
 	try {
 		//Delete record from DB, throw err if there is no any
 		const doc = await Record.findOneAndDelete({id, lang})
-		if(!doc) throw 'No record found with given ID and language'
+		if(!doc) throw {status: 'failed', msg: 'No record found with given ID and language'}
 
 		//Delete record's audio and image files from server
 		const imageUrl = path.join(__dirname, `../../public/img/${doc.image}`)
@@ -101,7 +101,7 @@ exports.get = async(req, res) => {
 		lang = req.params.lang
 	 try{
 		const doc = await Record.findOne({id, lang})
-		if(!doc) throw 'No record is found with given ID ang language'
+		if(!doc) throw {status: 'failed', msg: 'No record found with given ID and language'}
 
 		const formated = formatter(doc.image, doc.audio)
 		doc.image = formated.img
