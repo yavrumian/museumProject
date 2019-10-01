@@ -22,7 +22,7 @@ app.use(session({
 		saveUninitialized: true,
 		cookie: {maxAge: process.env.COOKIE_LIFE*3600*1000}
 	}))
-app.use(express.static(path.join(__dirname, '../public')))
+app.use('/api', express.static(path.join(__dirname, '../public')))
 app.use(`/${process.env.PREFIX}/record`, require('./routers/record'))
 app.use(`/${process.env.PREFIX}/token`, require('./routers/token'))
 
@@ -44,6 +44,11 @@ app.get(`/${process.env.PREFIX}/logout`, (req, res) => {
 app.get(`/${process.env.PREFIX}/checkLogin`, (req, res) => {
 	if(req.session.isLogged)	res.send({msg:'You\'re logged in'})
 	else res.send({msg:'You\'re not logged in'})
+})
+
+app.get(`/${process.env.PREFIX}/checkToken`, (req, res) => {
+	if(req.session.token) res.send({msg:'You\'re logged in with token'})
+	else res.send({msg:'No token is provided'})
 })
 
 app.get(`/${process.env.PREFIX}/getLangs`, (req, res) => {
