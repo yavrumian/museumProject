@@ -35,7 +35,7 @@ exports.add = async(req, res) => {
 		const formated = formatter(rec.image, rec.audio)
 		rec.image = formated.img
 		rec.audio = formated.audio
-		res.send(doc)
+		res.send(rec)
 	}catch(e){
 		console.log(e);
 		if(e.message) e = {msg: e.message}
@@ -48,11 +48,24 @@ exports.edit = async(req, res) => {
 	req.body.lang = req.params.lang
 	//seperate data for base64 decoder
 	const decoderBody = _.pick(req.body, ['image', 'audio', 'lang', 'id'])
-
+	let old;
 	//decode image and audio from base64 and save urls
-	const urls = base64toFile(decoderBody)
-	req.body.image = urls.imgUrl
-	req.body.audio = urls.audioUrl
+	try{
+		const rec = await Record.findOne({id: req.params.id, lang: req.params.lang })
+	 	old = _.pick(rec, ['audio', 'image'])
+		console.log(rec);
+	}catch(e){
+		console.log(e);
+		if(e.message) e = {msg: e.message}
+		res.status(404).send(e)
+	}
+
+
+	const urls = base64toFile(decoderBody, old)
+
+	if(urls.imgUrl) req.body.image = urls.imgUrl
+	if(urls.audioUrl) req.body.audio = urls.audioUrl
+
 
 	//pick values from request to avoid unwished data
 	const body = _.pick(req.body, ['title', 'description', 'audio', 'image'])
