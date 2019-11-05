@@ -30,7 +30,7 @@
     "express-validator": "^6.2.0",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "node-cron": "^2.0.3",
     "nodemon": "^1.19.2",
     "pdfkit": "^0.10.0",
