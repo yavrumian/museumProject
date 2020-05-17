@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Edit Post</title>
+
+	<link rel="stylesheet" href="css/main.css">
+	<style>
+	#iditi, #iditiLabel, #languLabel {
+		background-color: #ebebe4;
+	}
+    #crEdPost > .container form > .row > .col.inputs label ul#langu > li:hover > span {
+		color: #BFBFBF !important; 
+	}
+	.activeLang {
+		cursor: default !important	;
+	}
+	</style>
+</head>
+<body>
+	
+
+	<article id="crEdPost">
+		<div class="container">
+			<h1>EDIT RECORD:</h1>
+			<form id="addPostForm" name="postsMU">
+				<div class="row">
+					<div class="col col-row inputs">
+						<label for="title">
+							Title:
+							<input required type="text" id="title" placeholder="Name" name="title" minlength="5" >
+						</label>
+						<label for="iditi" id="iditiLabel">
+							ID:
+							<input required type="text" id="iditi" disabled placeholder="123456789" name="id">
+						</label>
+						<label for="langu" id="languLabel">
+							Language:
+							<ul id="langu">	
+							</ul>
+							<input  type="hidden" id="lang" name="lang">
+						</label>
+					</div>
+					<div class="col">
+						<label for="description">
+							Description:
+							<textarea name="description" id="description" placeholder="Short description"></textarea>
+						</label>
+					</div>
+					<div class="col col-row filesFooter">
+						<label class="addMultiFile">
+							<span>Attach</span>
+							<input type="file" id="imageUploadInput" name="image"  class="active"  accept="image/jpeg, image/jpg, image/png">
+							<input type="file" id="audioUploadInput" name="audio"  accept="audio/mp3, audio/mpeg3" disabled>
+							<span class="addAudioImgNames">Select image</span>
+						</label>
+						
+						<div class="imgsForstyle">
+							<img src="img/addPost/picActive.svg" id="selectImage" alt="Image">
+							<img src="img/addPost/volum.svg" id="selectAudio" alt="Audio">
+						</div>
+						<button type="submit" id="submitButton" class="send"><img src="img/homeUI/plus.svg" alt=""> Add Record</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</article>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/checkLogin.js"></script>
+	<script src="js/langs.js"></script>
+	<script src="js/editPost.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

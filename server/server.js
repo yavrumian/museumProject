@@ -13,24 +13,24 @@ const express = require('express'),
 	app = express(),
 	port = process.env.PORT
 
-app.use(bodyParser.json({limit: '10mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
-app.use(cors())
+app.use(bodyParser.json({limit: '50mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(session({
 		secret:process.env.SECRET,
 		resave: false,
 		saveUninitialized: true,
 		cookie: {maxAge: process.env.COOKIE_LIFE*3600*1000}
 	}))
-app.use('/api', express.static(path.join(__dirname, '../public')))
+app.use(`/${process.env.PREFIX}/`, express.static(path.join(__dirname, '../public')))
 app.use(`/${process.env.PREFIX}/record`, require('./routers/record'))
 app.use(`/${process.env.PREFIX}/token`, require('./routers/token'))
+app.use(cors())
 
 app.post(`/${process.env.PREFIX}/login`, (req, res) => {
 	if(req.body.username == process.env.LOGIN && req.body.pass == process.env.PASS){
 		req.session.isLogged = true
 		res.send({status: 'success', msg:'You\'re logged in'})
-	 }
+	}
 	else res.status(401).send({status: 'failed', msg:'Invalid username and/or password'})
 })
 
@@ -67,31 +67,31 @@ cron.schedule(process.env.PDF_DELETE_TIME, async() => {
 	}
 })
 
-cron.schedule(process.env.STAT_SEND_TIME, async() => {
-	try{
-		const stats = await Stat.find({})
-		if(!stats[0]) throw 'no stats'
-
-		const response = await request(`http://${process.env.ADMIN_SERVER}/`)
-		if(response.statusCode == 400) throw response.body
-
-		console.log('Sending statistics to admin server...');
-
-		for (var i = 0; i < stats.length; i++) {
-			await request({
-				method: 'POST',
-				json: true,
-				uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`,
-				body: {createdAt: stats[i].createdAt}
-			})
-
-			await Stat.findOneAndDelete({_id: stats[i]._id})
-		}
-		console.log('Statistics successfully sent to admin server');
-	}catch(e){
-		console.log();
-	}
-})
+// cron.schedule(process.env.STAT_SEND_TIME, async() => {
+// 	try{
+// 		const stats = await Stat.find({})
+// 		if(!stats[0]) throw 'no stats'
+//
+// 		const response = await request(`http://${process.env.ADMIN_SERVER}/`)
+// 		if(response.statusCode == 400) throw response.body
+//
+// 		console.log('Sending statistics to admin server...');
+//
+// 		for (var i = 0; i < stats.length; i++) {
+// 			await request({
+// 				method: 'POST',
+// 				json: true,
+// 				uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`,
+// 				body: {createdAt: stats[i].createdAt}
+// 			})
+//
+// 			await Stat.findOneAndDelete({_id: stats[i]._id})
+// 		}
+// 		console.log('Statistics successfully sent to admin server');
+// 	}catch(e){
+// 		console.log();
+// 	}
+// })
 
 app.listen(port, () => {
 	console.log(`Server running on port ${port}`);

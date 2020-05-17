@@ -37,7 +37,7 @@ exports.create = async(req, res) => {
 		//create token, define path to QR and text in qr
 		const token = id(process.env.TOKEN_LEN, process.env.TOKEN_PATTERN)
 		const pathToQR = path.join(__dirname, `../tmp/qr/${token}.png`)
-		const textToQR = `${process.env.HOST}/token?token=${token}`
+		const textToQR = `${process.env.HOST}/token?token=${token}&source=qr`
 		const pathToLogo = path.join(__dirname, '../img/logo.jpg')
 
 		//push doc to array
@@ -56,7 +56,7 @@ exports.create = async(req, res) => {
 				// .text(' ')
 				.fontSize(10)
 				.fillColor('black')
-				.text(`${process.env.HOST}/token`, {lineBrak: false, align: 'center'})
+				.text(`${process.env.HOST}/`, {lineBrak: false, align: 'center'})
 				.text(' ')
 				.fontSize(8)
 				.fillColor('grey')
@@ -92,43 +92,43 @@ exports.validate = async(req, res) => {
 
 		//fetch token from query, throw if not found or already used
 		const token = req.query.token;
-		const expTime = Date.now() + (process.env.COOKIE_LIFE * 3600 * 1000)
 		const doc = await Token.findOne({token})
-		if(!doc || doc.expireAt) throw ({msg: 'Invalid Token'})
+		console.log(doc);
+		console.log(!doc || doc.expireAt);
+		if(!doc || doc.expireAt) {
+			throw ({msg: 'Invalid Token'})}
+		const expTime = Date.now() + (process.env.COOKIE_LIFE * 3600 * 1000)
 
 		//set expireTime and save to DB
 		doc.expireAt = expTime
 		await doc.save()
 		//set session.token for authentication
 		req.session.token = token
-
-
+		if(req.query.source == "qr") return res.redirect(`https://${process.env.HOST}/lang.html`)
+		res.send({token: doc.token})
 	}catch(e){
 		console.log(e);
 		if(e.message) e = {msg: e.message}
 		return res.status(400).send(e)
 	}
-	try{
-		//send request to admin server
-		const response = await request({
-			method: 'POST',
-			json: true,
-			uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`,
-			body: {createdAt: Date.now()}
-		})
-		if(response.statusCode == 400) throw response.body
-	}catch(e){
-		try{
-			await new Stat({createdAt: Date.now()}).save()
-		}catch(e){
-			console.log(e);
-			return res.status(400).send()
-		}
-		console.log({name: e.name, msg: e.message});
-	}
-	res.send({token: req.query.token})
-
-
+	// try{
+	// 	//send request to admin server
+	// 	const response = await request({
+	// 		method: 'POST',
+	// 		json: true,
+	// 		uri: `http://${process.env.ADMIN_SERVER}/newStat?id=${process.env.ID}`,
+	// 		body: {createdAt: Date.now()}
+	// 	})
+	// 	if(response.statusCode == 400) throw response.body
+	// }catch(e){
+	// 	try{
+	// 		await new Stat({createdAt: Date.now()}).save()
+	// 	}catch(e){
+	// 		console.log(e);
+	// 		return res.status(400).send()
+	// 	}
+	// 	console.log({name: e.name, msg: e.message});
+	// }
 }
 
 exports.getActive = async(req, res) => {

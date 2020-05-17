@@ -3,3 +3,4 @@ public/img
 public/pdf
 public/audio
 server/tmp
+.env

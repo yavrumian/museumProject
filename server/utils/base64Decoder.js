@@ -12,7 +12,7 @@ var	imgFormat,
 
 module.exports = (body, old) => {
 	if(old){
-		oldImg =  path.join(__dirname, `../../public/img/${old.image}`)
+		oldImg =  path.join(__dirname, `../../public/img/record/${old.image}`)
 		fs.unlink(oldImg, (err) => {if(err) throw err})
 		oldAudio =  path.join(__dirname, `../../public/audio/${old.audio}`)
 		fs.unlink(oldAudio, (err) => {if(err) throw err})
@@ -20,7 +20,7 @@ module.exports = (body, old) => {
 	if(body.image){
 		imgFormat = body.image.trim().substr(11, 3)
 		base64img = body.image.split(';base64,').pop()
-		imgUrl = path.join(__dirname, `../../public/img/${body.lang}${body.id}.${imgFormat}`)
+		imgUrl = path.join(__dirname, `../../public/img/record/${body.lang}${body.id}.${imgFormat}`)
 		img = `${body.lang}${body.id}.${imgFormat}`
 		console.log(img);
 		fs.writeFile(imgUrl, base64img, {encoding: 'base64'}, function(err) {

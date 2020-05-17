@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Login</title>
+
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+	<article id="login">
+		<div class="container">
+			<div class="row">
+				<img src="img/logo.svg" alt="">
+				<form id="loginForm">
+					<div class="col">
+						<label id="loginLabel" for="loginM">
+							<img src="img/login/email.svg" alt="">
+							<input required type="text" name="login" id="loginM" placeholder="Email">
+						</label>
+					</div>
+					<div class="col">
+						<label id="passwordLabel" for="passM">
+							<img src="img/login/password.svg" alt="">
+							<input required type="password" name="password" placeholder="Password" id="passM">
+						</label>
+					</div>
+					<button id="loginButton" type="submit">Login</button>
+				</form>
+			</div>
+			<div class="footer">
+				<div class="col">
+					<a href="#">Forget password</a>
+				</div>
+				<div class="col">
+					<p> Don’t have an account? <a href="#">Sign Up</a></p>
+				</div>
+			</div>
+		</div>
+	</article>
+	
+
+	
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/login.js"></script>
+</body>
+</html>

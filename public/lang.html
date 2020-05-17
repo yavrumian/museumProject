@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Language</title>
+
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<noscript>Sorry, your browser does not support JavaScript!</noscript>
+
+	<!-- Lang html -->
+	<article id="langUser">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<img src="img/lang/langLogo.svg" alt="LangLogo" class="logoLangSf">
+					<h2>Choose Your Preferred Language </h2>
+					<p>Please select your language</p>
+				</div>
+				<div class="col">
+					<form action="id.html">
+						<div class="inp">
+							<ul id="langsUl">
+								<!--
+								<li><p><img class="arm" src="img/lang/arm.svg" alt="">Armenian</p><img src="img/lang/choose.svg" alt=""></li>
+								<li><p><img class="eng" src="img/lang/eng.svg" alt="">English</p><img src="img/lang/choose.svg" alt=""></li>
+								<li><p><img class="ru" src="img/lang/ru.svg" alt="">Russian</p><img src="img/lang/choose.svg" alt=""></li>
+								-->
+							</ul>
+							<input type="text" required="required" name="language" id="lang">
+						</div>
+						<div class="inp-btn">
+							<input type="submit" value="Next"> <!--in sessionStorage browser I save lang for using // key = "lang" look in main.js -> line 84-->
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script defer async src="m-admin/js/config.js"></script>
+	<script defer async src="js/main.js"></script>
+	<script defer async src="m-admin/js/langs.js"></script>
+	<script defer async src="js/lang.js"></script>
+</body>
+</html>

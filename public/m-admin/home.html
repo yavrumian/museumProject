@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home UI</title>
+
+	<!-- fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	
+	<!-- styles -->
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+
+	<!-- Header // Menu Admin -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="heading">
+					<h1>RECORDS</h1>
+				</div>
+				<div class="col">
+					<ul class="buttons">
+						<li><a href="#" class="print"><img src="img/homeUI/print.svg" alt=""> Print</a></li>
+						<li><a href="addPost.html" class="create"><img src="img/homeUI/plus.svg" alt=""> Create</a></li>
+						<li><a href="#" class="logout"><img src="img/homeUI/logout.svg" alt=""> Logout</a></li>
+					</ul>
+					<div class="tokens">
+						<p>Active tokens: <span class="tokenCount" id="activeTokensSpan">-</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<!-- Main // recors container -->
+	<article id="mainTable">
+		<div class="container">
+			<div class="row">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Title</th>
+							<th>Language</th>
+							<th>Created at</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="tableBody">
+						<!--
+						<tr class="active">
+							<td>134688791220</td>
+							<td>Name</td>
+							<td>English</td>
+							<td>05.03.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>593965125849</td>
+							<td>800</td>
+							<td>English</td>
+							<td>10.05.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>555987841098</td>
+							<td>7,740</td>
+							<td>English</td>
+							<td>06.06.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>995245212707</td>
+							<td>5,000</td>
+							<td>English</td>
+							<td>10.06.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>256546498878</td>
+							<td>12,703</td>
+							<td>English</td>
+							<td>30.06.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>666980654165</td>
+							<td>3,000</td>
+							<td>English</td>
+							<td>21.07.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>234567984790</td>
+							<td>2,700</td>
+							<td>English</td>
+							<td>31.07.2019</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>982231000187</td>
+							<td>10,703</td>
+							<td>English</td>
+							<td>03.03.2017</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>000054974456</td>
+							<td>25,000</td>
+							<td>English</td>
+							<td>12.10.2016</td>
+							<td>
+								<div class="btns-req">
+									<button type="button"><img src="img/homeUI/edit.svg" alt=""></button>
+									<button type="button"><img src="img/homeUI/delete.svg" alt=""></button>
+								</div>
+							</td>
+						</tr>
+					-->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</article>
+
+	
+	<!-- Modal print -->
+	<div id="modalPrint">
+		<div class="modal-body">
+			<form action="" name="">
+				<h1>Print QR Token</h1>
+				<div><input id="newTokenInput" type="text" placeholder="Quantitiy" name=""></div>
+				<div><button id="printButton" type="button"><img src="img/homeUI/print.svg" alt=""> Print</button></div>
+			</form>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/checkLogin.js"></script>
+	<script src="js/langs.js"></script>
+	<script src="js/home.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Exponat</title>
+
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<noscript>Sorry, your browser does not support JavaScript!</noscript>
+	
+	<!-- exponat html -->
+	<article id="exponatUser">
+		<div class="container">
+			<div class="row">
+				<div class="col langExpList">
+					<ul id="langsUl">
+						<!--
+						<li><p><img class="arm" src="img/lang/arm.svg" alt="">Armenian</p><img src="img/exponat/arrow-bottom.svg" alt=""></li>
+						<li><p><img class="eng" src="img/lang/eng.svg" alt="">English</p><img src="img/exponat/arrow-bottom.svg" alt=""></li>
+						<li><p><img class="ru" src="img/lang/ru.svg" alt="">Russian</p><img src="img/exponat/arrow-bottom.svg" alt=""></li>
+						-->
+					</ul>
+				</div>
+				<div class="col">
+					<h2 id="titleExponat">-</h2>
+					<div class="description">
+						<p id="descriptionExponat">-</p>
+					</div>
+
+					<div class="image">
+						<img id="imageExponat" src="img/exponat/exp1img.png" alt="">
+					</div>
+
+					<div class="audio">
+						<audio id="audioExponat" src="audio/exp1audio.mp3" controls="controls" controlsList="nodownload"></audio>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form action="exponat.html">
+			<input type="number" name="id" required="required" placeholder="Search by ID">
+			<input type="submit" value="Next">
+		</form>
+	</article>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script defer async src="m-admin/js/config.js"></script>
+	<script defer async src="m-admin/js/langs.js"></script>
+	<script defer async src="js/main.js"></script>
+	<script defer async src="js/exponat.js"></script>
+</body>
+</html>

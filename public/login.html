@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Login</title>
+
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<noscript>Sorry, your browser does not support JavaScript!</noscript>
+
+	<article id="loginUser">
+		<div class="container">
+			<div class="row">
+				<div class="picLogo">
+					<img src="img/login/logo.svg" alt="LogoAudioGid">
+				</div>
+				<form action="token.html" id="formLoginID">
+					<div class="col">
+						<label for="loginM">
+							<img src="img/login/email.svg" alt="">
+							<input required="true" type="email" name="login" id="loginM" placeholder="Email">
+						</label>
+					</div>
+					<div class="col">
+						<label for="passM">
+							<img src="img/login/password.svg" alt="">
+							<input required="true" type="password" name="password" placeholder="Password" id="passM">
+						</label>
+					</div>
+					<div class="col">
+						<input type="submit" value="Login">
+					</div>
+				</form>
+			</div>
+			<div class="footer">
+				<div class="col">
+					<a href="#">Forget password</a>
+				</div>
+				<div class="col">
+					<p> Don’t have an account? <a href="#">Sign Up</a></p>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script defer async src="js/main.js"></script>
+</body>
+</html>
+ 
